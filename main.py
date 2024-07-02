@@ -1,7 +1,8 @@
 from email.mime import image
+from string import whitespace
 import functions as ff
 import tkinter as tk
-from tkinter import PhotoImage, ttk
+from tkinter import DISABLED, PhotoImage, ttk
 import time
 
 # main window
@@ -10,7 +11,17 @@ root_main.title('Casino Roulette')
 root_main.geometry('1500x600')
 
 circle_path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\roulette.png'
+coin5path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin5.png'
+coin10path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin10.png'
+coin25path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin25.png'
+coin50path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin50.png'
+coin100path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin100.png'
 circle_img=PhotoImage(file=circle_path)
+coin5_img=PhotoImage(file=coin5path)
+coin10_img=PhotoImage(file=coin10path)
+coin25_img=PhotoImage(file=coin25path)
+coin50_img=PhotoImage(file=coin50path)
+coin100_img=PhotoImage(file=coin100path)
 
 
 # main frame
@@ -72,12 +83,16 @@ label10.grid(row=9, column=0)
 circle=tk.Label(frame_circle, image=circle_img)
 spin=tk.Button(frame_circle, width=4, text='Spin')
 help=tk.Button(frame_circle, width=4, text='Help')
-outcome=tk.Label(frame_circle, text='Outcome')
+outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
+back=tk.Button(frame_circle, width=7, text='Back bet')
+reset=tk.Button(frame_circle, width=7, text='Reset bet')
 
 circle.grid(row=0, column=0, columnspan=2)
 spin.grid(row=1, column=0)
 help.grid(row=1, column=1)
 outcome.grid(row=2, column=0, columnspan=2)
+back.grid(row=3, column=0)
+reset.grid(row=3, column=1)
 
 
 # numbers and bets
@@ -488,6 +503,33 @@ serie58.grid(row=1, column=14, columnspan=6, sticky='w')
 
 
 # money
+balance=tk.Label(frame_money, text='Your balance', background='white', borderwidth=2, relief='solid', width=12, height=2)
+cur_bet=tk.Label(frame_money, text='Bet', background='white', borderwidth=2, relief='solid', width=12, height=2)
+chances=tk.Label(frame_money, text='Chances', background='white', borderwidth=2, relief='solid', width=12, height=2)
+check5=tk.Radiobutton(frame_money)
+check10=tk.Radiobutton(frame_money)
+check25=tk.Radiobutton(frame_money)
+check50=tk.Radiobutton(frame_money)
+check100=tk.Radiobutton(frame_money)
+coin5=tk.Button(frame_money, image=coin5_img, width=60, height=60)
+coin10=tk.Button(frame_money, image=coin10_img, width=60, height=60)
+coin25=tk.Button(frame_money, image=coin25_img, width=60, height=60)
+coin50=tk.Button(frame_money, image=coin50_img, width=60, height=60)
+coin100=tk.Button(frame_money, image=coin100_img, width=60, height=60)
+
+balance.grid(row=0, column=0, rowspan=2)
+cur_bet.grid(row=0, column=1, rowspan=2)
+chances.grid(row=0, column=2, rowspan=2)
+check5.grid(row=0, column=3)
+check10.grid(row=0, column=4)
+check25.grid(row=0, column=5)
+check50.grid(row=0, column=6)
+check100.grid(row=0, column=7)
+coin5.grid(row=1, column=3)
+coin10.grid(row=1, column=4)
+coin25.grid(row=1, column=5)
+coin50.grid(row=1, column=6)
+coin100.grid(row=1, column=7)
 
 
 root_main.mainloop()
