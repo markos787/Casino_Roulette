@@ -1,8 +1,6 @@
-from email.mime import image
-from string import whitespace
 import functions as ff
 import tkinter as tk
-from tkinter import DISABLED, PhotoImage, ttk
+from tkinter import DISABLED, PhotoImage
 import time
 
 # main window
