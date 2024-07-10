@@ -132,7 +132,7 @@ o33=tk.Button(frame_bets, width=4, height=2, text='33')
 o34=tk.Button(frame_bets, width=4, height=2, text='34')
 o35=tk.Button(frame_bets, width=4, height=2, text='35')
 o36=tk.Button(frame_bets, width=4, height=2, text='36')
-# double numbers - vertical
+# double numbers - horizontal
 d01=tk.Button(frame_bets, width=2, height=2)
 d02=tk.Button(frame_bets, width=2, height=2)
 d03=tk.Button(frame_bets, width=2, height=2)
@@ -169,7 +169,7 @@ d3033=tk.Button(frame_bets, width=2, height=2)
 d3134=tk.Button(frame_bets, width=2, height=2)
 d3235=tk.Button(frame_bets, width=2, height=2)
 d3336=tk.Button(frame_bets, width=2, height=2)
-# double numbers - horizontal
+# double numbers - vertical
 d12=tk.Button(frame_bets, width=4, height=1)
 d23=tk.Button(frame_bets, width=4, height=1)
 d45=tk.Button(frame_bets, width=4, height=1)
@@ -248,11 +248,14 @@ s282930313233=tk.Button(frame_bets, width=2, height=1)
 s313233343536=tk.Button(frame_bets, width=2, height=1)
 # dozens and columns
 doz112=tk.Button(frame_bets, width=31, height=2, text='1 to 12')
-doz1314=tk.Button(frame_bets, width=31, height=2, text='13 to 24')
+doz1324=tk.Button(frame_bets, width=31, height=2, text='13 to 24')
 doz2536=tk.Button(frame_bets, width=31, height=2, text='25 to 36')
-col114=tk.Button(frame_bets, width=8, height=2, text='1st 12')
+col134=tk.Button(frame_bets, width=8, height=2, text='1st 12')
 col235=tk.Button(frame_bets, width=8, height=2, text='2nd 12')
 col336=tk.Button(frame_bets, width=8, height=2, text='3rd 12')
+# colours
+red=tk.Button(frame_bets, width=7, height=2, background='red')
+black=tk.Button(frame_bets, width=7, height=2, background='black')
 
 o0.grid(row=0, column=0, rowspan=6, sticky='n')
 o1.grid(row=4, column=2)
@@ -407,12 +410,14 @@ s282930313233.grid(row=5, column=21)
 s313233343536.grid(row=5, column=23)
 # dozens and columns
 doz112.grid(row=6, column=2, columnspan=7, sticky='w')
-doz1314.grid(row=6, column=10, columnspan=7, sticky='w')
+doz1324.grid(row=6, column=10, columnspan=7, sticky='w')
 doz2536.grid(row=6, column=18, columnspan=7, sticky='w')
-col114.grid(row=0, column=25)
+col134.grid(row=0, column=25)
 col235.grid(row=2, column=25)
 col336.grid(row=4, column=25)
-
+# colours
+red.grid(row=7, column=11, columnspan=2)
+black.grid(row=7, column=14, columnspan=2)
 
 # neighbours
 n26=tk.Button(frame_neighbours, width=3, height=1, text='26')
