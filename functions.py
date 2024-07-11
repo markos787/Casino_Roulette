@@ -29,8 +29,8 @@ def enter_prize(x:str)->int:
         enter=100
     return enter
 
-def single_bet(number:str, x:str)->dict: # returns dictionary with single bet
-    return {f'{number}':enter_prize(x)}
+def single_bet(position:str, x:str, list:list)->dict: # returns dictionary with single bet
+    return {f'{position}':enter_prize(x)}
 
 def bet_position(list:list)->dict: # returns overall bet on single position
     dictionary={}
@@ -90,7 +90,7 @@ def draw_result(x:int)->list:
         case 36: return ['serie58', 'n27', 'n13', 'n36', 'n11', 'n30', 'o_36_', 'd_33_36_', 'd_35_36_', 't_34_35_36_', 'q_32_33_35_36_', 's_31_32_33_34_35_36_', 'doz_25_36_', 'col_3_36_', 'red']
         case _: return []
 
-def bet_result(list:list, dict:dict)->int:
+def bet_result(x:int, list:list, dict:dict)->int: # returns money won/lost in a single draw
 
     result={}
     for key, value in dict.items():
@@ -113,8 +113,33 @@ def bet_result(list:list, dict:dict)->int:
             result2[key2]=value2*3
         elif str(key2).startswith('red') or str(key2).startswith('black'):
             result2[key2]=value2*2
+        elif str(key2).startswith('n'):
+            result2[key2]=value2*36
+        elif str(key2).startswith('sp'):
+            if x==26:
+                result2[key2]=value2*36
+            else:
+                result2[key2]=value2*18
+        elif str(key2).startswith('orp'):
+            if x==1 or x==17:
+                result2[key2]=value2*36
+            else:
+                result2[key2]=value2*18
+        elif str(key2).startswith('serie023'):
+            if x==25 or x==26 or x==28 or x==29:
+                result2[key2]=value2*9
+            elif x==0 or x==2 or x==3:
+                result2[key2]=value2*12
+            else:
+                result2[key2]=value2*18
+        elif str(key2).startswith('serie58'):
+            result2[key2]=value2*18
+        
+    sum_values=int(sum(result2.values()))
 
-#  TODO - dokończyć dla sąsiadów, spiela, orphelinów i seriii, zmienić strukturę przypisywania zakładów (jeżeli w słowniku klucz się powtarza, to nie jest powielany, tylko nadpisywany)
+    return sum_values
+
+#  TODO 
 
 # lista=[{'d36':5}, {'s25':10}, {'t123':10}, {'d36':10}, {'d36':25}, {'t123': 25}]
 # print(bet_position(lista))
