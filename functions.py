@@ -139,7 +139,13 @@ def bet_result(x:int, list:list, dict:dict)->int: # returns money won/lost in a 
 
     return sum_values
 
-#  TODO 
+def balance(before:list, bet:int, prize:int)->list: # returns overall money owned by a player
+    outcome=before[-1]+prize-bet
+    before.append(outcome)
+    return before
+
+def chances(dict:dict)->str: # returns percentage of chances to win anything from a bet
+#  TODO make lists of numbers that are associated with a position, concat lists that are on the bet, keep only numbers that does not repeat and calculate chances, make it after every bet
 
 # lista=[{'d36':5}, {'s25':10}, {'t123':10}, {'d36':10}, {'d36':25}, {'t123': 25}]
 # print(bet_position(lista))
