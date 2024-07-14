@@ -1,14 +1,13 @@
-from unittest import result
 import numpy as np
 import random
 import time
 
-def draw(list:list)->int:
+def draw(list:list)->int: # returns number as a result of a roulette draw and appends it to list of previous numbers
     x=random.randint(0,36)
     list.append(x)
     return x
 
-def prev_numbers(list:list,step:int)->str: # returns drawn number where step is number of draw
+def prev_numbers(list:list,step:int)->str: # returns previously drawn number where step is number of draw
     try:
         x=list[::-1]
         x=x[step-1]
@@ -16,7 +15,7 @@ def prev_numbers(list:list,step:int)->str: # returns drawn number where step is 
         x='--'
     return x
 
-def enter_prize(x:str)->int:
+def enter_prize(x:str)->int: # returns value of enter prize depending on chosen coin
     if x=='coin5':
         enter=5
     elif x=='coin10':
@@ -32,7 +31,7 @@ def enter_prize(x:str)->int:
 def single_bet(position:str, x:str, list:list)->dict: # returns dictionary with single bet
     return {f'{position}':enter_prize(x)}
 
-def bet_position(list:list)->dict: # returns overall bet on single position
+def bet_position(list:list)->dict: # returns all bets divided between single positions
     dictionary={}
     for single_dict in list:
         for key, value in single_dict.items():
@@ -42,14 +41,14 @@ def bet_position(list:list)->dict: # returns overall bet on single position
                 dictionary[key]=value
     return dictionary
 
-def overall_bet(dict:dict)->str:
+def overall_bet(dict:dict)->str: # returns overall value of all bets on table
     list=[]
     for key, value in dict.items():
         list.append(int(value))
     all=str(sum(list))
     return all
 
-def draw_result(x:int)->list:
+def draw_result(x:int)->list: # returns list of possible bet wins depending on drawn number
     match x:
         case 0: return ['spiel', 'n26', 'n0', 'n32', 'n15', 'n3', 'o_0_', 'd_0_1_', 'd_0_2_', 'd_0_3_', 't_0_1_2_', 't_0_2_3_', 'q_0_1_2_3_']
         case 1: return ['orphelins', 'n16', 'n33', 'n1', 'n20', 'n14', 'o_1_', 'd_0_1_', 'd_1_4_', 'd_1_2_', 't_0_1_2_', 'q_0_1_2_3_', 't_1_2_3_', 'q_1_2_4_5_', 's_1_2_3_4_5_6_', 'doz_1_12_', 'col_1_34_', 'red']
@@ -340,9 +339,42 @@ def chances(dict:dict)->str: # returns percentage of chances to win anything fro
     orphelins = [9,31,14,20,1,6,34,17]
     serie58 = [33,16,24,5,10,23,8,30,11,36,13,27]
 
+    bets_values=[o0,o1,o2,o3,o4,o5,o6,o7,o8,o9,o10,o11,o12,o13,o14,o15,o16,o17,o18,o19,o20,o21,o22,o23,o24,o25,o26,o27,o28,o29,o30,o31,o32,o33,o34,o35,o36,d01,d02,d03,d14,d25,d36,d47,d58,d69,d710,d811,d912,d1013,d1114,d1215,d1316,d1417,d1518,d1619,d1720,d1821,d1922,d2023,d2124,d2225,d2326,d2427,d2528,d2629,d2730,d2831,d2932,d3033,d3134,d3235,d3336,d12,d23,d45,d56,d78,d89,d1011,d1112,d1314,d1415,d1617,d1718,d1920,d2021,d2223,d2324,d2526,d2627,d2829,d2930,d3132,d3233,d3435,d3536,t012,t023,q0123,t123,t456,t789,t101112,t131415,t161718,t192021,t222324,t252627,t282930,t313233,t343536,q1245,q2356,q4578,q5689,q781011,q891112,q10111314,q11121415,q13141617,q14151718,q16171920,q17182021,q19202223,q20212324,q22232526,q23242627,q25262829,q26272930,q28293132,q29303233,q31323435,q32333536,s123456,s456789,s789101112,s101112131415,s131415161718,s161718192021,s192021222324,s222324252627,s252627282930,s282930313233,s313233343536,doz112,doz1324,doz2536,col134,col235,col336,red,black,n26,n3,n35,n12,n28,n7,n29,n18,n22,n9,n31,n14,n20,n1,n33,n16,n24,n5,n10,n23,n0,n32,n15,n19,n4,n21,n2,n25,n17,n34,n6,n27,n13,n36,n11,n30,n8,spiel,serie023,orphelins,serie58]
+    bets_keys=['o0','o1','o2','o3','o4','o5','o6','o7','o8','o9','o10','o11','o12','o13','o14','o15','o16','o17','o18','o19','o20','o21','o22','o23','o24','o25','o26','o27','o28','o29','o30','o31','o32','o33','o34','o35','o36','d01','d02','d03','d14','d25','d36','d47','d58','d69','d710','d811','d912','d1013','d1114','d1215','d1316','d1417','d1518','d1619','d1720','d1821','d1922','d2023','d2124','d2225','d2326','d2427','d2528','d2629','d2730','d2831','d2932','d3033','d3134','d3235','d3336','d12','d23','d45','d56','d78','d89','d1011','d1112','d1314','d1415','d1617','d1718','d1920','d2021','d2223','d2324','d2526','d2627','d2829','d2930','d3132','d3233','d3435','d3536','t012','t023','q0123','t123','t456','t789','t101112','t131415','t161718','t192021','t222324','t252627','t282930','t313233','t343536','q1245','q2356','q4578','q5689','q781011','q891112','q10111314','q11121415','q13141617','q14151718','q16171920','q17182021','q19202223','q20212324','q22232526','q23242627','q25262829','q26272930','q28293132','q29303233','q31323435','q32333536','s123456','s456789','s789101112','s101112131415','s131415161718','s161718192021','s192021222324','s222324252627','s252627282930','s282930313233','s313233343536','doz112','doz1324','doz2536','col134','col235','col336','red','black','n26','n3','n35','n12','n28','n7','n29','n18','n22','n9','n31','n14','n20','n1','n33','n16','n24','n5','n10','n23','n0','n32','n15','n19','n4','n21','n2','n25','n17','n34','n6','n27','n13','n36','n11','n30','n8','spiel','serie023','orphelins','serie58']
+    bets={}
+    for i in range(len(bets_keys)):
+        bets[bets_keys[i]]=bets_values[i]
+
+    made_bets=[]
+    for key, value in dict.items():
+        made_bets.append(key)
     
+    list_numbers_on_bet=[]
+    for key, value in bets.items():
+        if key in made_bets:
+            list_numbers_on_bet.append(value)
+        else:
+            continue
+    
+    numbers_on_bet=[]
+    for item in list_numbers_on_bet:
+        numbers_on_bet.extend(item)
 
-#  TODO concat lists that are on the bet, keep only numbers that does not repeat and calculate chances, make it after every bet
+    single_numbers=[]
+    for item in numbers_on_bet:
+        if item in single_numbers:
+            continue
+        else:
+            single_numbers.append(item)
+    
+    chance=f'{round(len(single_numbers)/36, 2)}%'
+        
+    return chance
 
-# lista=[{'d36':5}, {'s25':10}, {'t123':10}, {'d36':10}, {'d36':25}, {'t123': 25}]
-# print(bet_position(lista))
+
+
+#  TODO
+
+# lista=[{'d36':5}, {'n25':10}, {'t123':10}, {'d36':10}, {'d36':25}, {'t123': 25}]
+# diction={'d36': 40, 'n25': 10, 't123': 35}
+# print(chances(diction))
