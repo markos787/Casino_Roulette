@@ -3,6 +3,19 @@ import tkinter as tk
 from tkinter import DISABLED, PhotoImage
 import time
 
+# help window
+def help_window(event=None):
+    root_help=tk.Toplevel()
+    root_help.title('Help')
+    root_help.geometry('800x400')
+
+    # help frame
+    frame_help=tk.Frame(root_help)
+    frame_help.grid(row=0, column=0)
+
+    # text of help
+    label_help=tk.Label(frame_help, text='Help')
+
 # main window
 root_main=tk.Tk()
 root_main.title('Casino Roulette')
@@ -80,7 +93,7 @@ label10.grid(row=9, column=0)
 # circle of roulette and play button
 circle=tk.Label(frame_circle, image=circle_img)
 spin=tk.Button(frame_circle, width=4, text='Spin')
-help=tk.Button(frame_circle, width=4, text='Help')
+help=tk.Button(frame_circle, width=4, text='Help', command=help_window)
 outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
 back=tk.Button(frame_circle, width=7, text='Back bet')
 reset=tk.Button(frame_circle, width=7, text='Reset bet')
