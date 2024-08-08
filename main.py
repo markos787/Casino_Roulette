@@ -1,6 +1,6 @@
 import functions as ff
 import tkinter as tk
-from tkinter import DISABLED, PhotoImage
+from tkinter import PhotoImage
 import time
 
 # help window
@@ -8,18 +8,98 @@ def help_window(event=None):
     root_help=tk.Toplevel()
     root_help.title('Help')
     root_help.geometry('800x400')
+    root_help.resizable(False, False)
+
+    root_help.grid_rowconfigure(0, weight=1)
+    root_help.grid_columnconfigure(0, weight=1)
+
+    # frame for canvas
+    canvas_frame_help=tk.Frame(root_help)
+    canvas_frame_help.grid(row=0, column=0)
+    canvas_frame_help.grid_rowconfigure(0, weight=1)
+    canvas_frame_help.grid_columnconfigure(0, weight=1)
+
+    # canvas
+    canvas=tk.Canvas(canvas_frame_help, width=root_help.winfo_width(), height=root_help.winfo_height())
+    canvas.grid(row=0, column=0)
+
+    # scrollbar
+    scrollbar = tk.Scrollbar(canvas_frame_help, orient="vertical", command=canvas.yview)
+    scrollbar.grid(row=0, column=1, sticky="ns")
+    canvas.configure(yscrollcommand=scrollbar.set)
 
     # help frame
-    frame_help=tk.Frame(root_help)
-    frame_help.grid(row=0, column=0)
+    frame_help=tk.Frame(canvas)
+    canvas.create_window((0,0), window=frame_help, anchor='nw')
+
 
     # text of help
-    label_help=tk.Label(frame_help, text='Help')
+    label_help_title=tk.Label(frame_help, wraplength=780, justify='left', text=r'Help')
+    label_help_sub1=tk.Label(frame_help, wraplength=780, justify='left', text=r'1. What is roulette?')
+    label_help_txt1=tk.Label(frame_help, wraplength=780, justify='left', text=r'French roulette is a game in which players place bets on the outcome of one of 37 numbers drawn from 0 to 36. The roulette wheel is turned by a dealer (throw), who also settles the winnings after the throw. Players can bet not only on individual numbers, but also on their combinations, which will be explained below. The outcome of the throw is completely random. In the computer version, the system plays the role of the dealer, but the outcome is also 100% random.')
+    label_help_sub2=tk.Label(frame_help, wraplength=780, justify='left', text=r'2. What is the maximum bet?')
+    label_help_txt2=tk.Label(frame_help, wraplength=780, justify='left', text=r'A player can place a maximum of 10,000 on the table at one time.')
+    label_help_sub3=tk.Label(frame_help, wraplength=780, justify='left', text=r'3. What do the individual bets look like?')
+    label_help_txt3=tk.Label(frame_help, wraplength=780, justify='left', text=r'Single - a bet on a single number. The chance of hitting is the smallest, but the winnings are the highest. The player receives 36 times their bet.')
+    label_help_txt4=tk.Label(frame_help, wraplength=780, justify='left', text=r'Two - the player bets on two numbers that are adjacent to each other on the table (not on the wheel). The win is 18 times the bet.')
+    label_help_txt5=tk.Label(frame_help, wraplength=780, justify='left', text=r'Three - a bet on three numbers that are adjacent to each other on the table. The win is 12 times the bet.')
+    label_help_txt6=tk.Label(frame_help, wraplength=780, justify='left', text=r'Four - the player bets on a combination of the four numbers that are closest to each other on the table. The win is 9 times the bet.')
+    label_help_txt7=tk.Label(frame_help, wraplength=780, justify='left', text=r'Six - a bet on the six numbers that are closest to each other on the table. The win is 6 times the bet.')
+    label_help_txt8=tk.Label(frame_help, wraplength=780, justify='left', text=r'Dozen - twelve consecutive numbers according to the table. The win is 3 times the bet. The minimum bet is 25.')
+    label_help_txt9=tk.Label(frame_help, wraplength=780, justify='left', text=r'Column - twelve numbers located in three columns of the table. The win is 3 times the bet. The minimum bet is 25.')
+    label_help_txt10=tk.Label(frame_help, wraplength=780, justify='left', text=r'Color - black or red. The win is 2 times the bet. The minimum bet is 50.')
+    label_help_txt11=tk.Label(frame_help, wraplength=780, justify='left', text=r'Neighbors - when betting on the neighbor of a given number, you bet on that number and two of its neighbors on each side according to the wheel. The win is 31 times the bet. The minimum bet includes 5 tokens.')
+    label_help_txt12=tk.Label(frame_help, wraplength=780, justify='left', text=r'0 Spiel - in this bet, you bet on the neighbors of the number 0. The bet on the number 26 is a single, and on the numbers 0, 3, 12, 15, 32 and 35 - double. The minimum bet is 4 tokens, so the winnings are either 32 times or 14 times the bet.')
+    label_help_txt13=tk.Label(frame_help, wraplength=780, justify='left', text=r'Series 0/2/3 - bet on the numbers 15, 32, 0, 26, 3, 35, 12, 28, 7, 29, 18, 22, 25, 2, 21, 4 and 19 (i.e. this is an extended 0 Spiel), with the numbers 25, 26, 28 and 29 being double fours, the numbers 0, 2 and 3 being double threes, and the remaining numbers being single twos. The minimum bet is 9 tokens, and the winnings are 9 times, 15 times or also 9 times if a four, three or two is rolled.')
+    label_help_txt14=tk.Label(frame_help, wraplength=780, justify='left', text=r'Orphelins - consists of numbers that neither Series 0/2/3 nor Series 5/8 will cover, i.e. 9, 31, 14, 20, 1, 6, 34 and 17. This is a stake of 5 tokens, one of which is on 1 and then one token each on the twos 6/9, 14/17, 17/20 and 31/34.')
+    label_help_txt15=tk.Label(frame_help, wraplength=780, justify='left', text=r'Series 5/8 - includes the remaining numbers not listed above, i.e. 33, 16, 24, 5, 10, 23, 8, 30, 11, 36, 13 and 27. All 6 of the minimum chips are placed on the pairs of these numbers, so the winnings are 12 times the bet.')
+    label_help_sub4=tk.Label(frame_help, wraplength=780, justify='left', text=r'4. How to play?')
+    label_help_txt16=tk.Label(frame_help, wraplength=780, justify='left', text=r'First, you must make a bet. To do this, click on the icon of the token in question, and then on the button with the number or another bet. This action must be repeated each time for a new bet. The total bet and the chances of hitting the number with the current total bet will be displayed to the left of the tokens. Even further to the left is the balance, which the player starts at 5,000. If the player wants to undo the previous bet, they should click "Back bet" under the roulette wheel, and if they want to bet again - the "Reset bet" button next to it. There is also a place for the last drawn number under the wheel, and a history of the last 10 draws on the left side of the wheel. To spin the wheel, click the "Spin" button.')
+
+    label_help_title.grid(row=0, column=0, sticky='W')
+    label_help_sub1.grid(row=1, column=0, sticky='W')
+    label_help_txt1.grid(row=2, column=0, sticky='W')
+    label_help_sub2.grid(row=3, column=0, sticky='W')
+    label_help_txt2.grid(row=4, column=0, sticky='W')
+    label_help_sub3.grid(row=5, column=0, sticky='W')
+    label_help_txt3.grid(row=6, column=0, sticky='W')
+    label_help_txt4.grid(row=7, column=0, sticky='W')
+    label_help_txt5.grid(row=8, column=0, sticky='W')
+    label_help_txt6.grid(row=9, column=0, sticky='W')
+    label_help_txt7.grid(row=10, column=0, sticky='W')
+    label_help_txt8.grid(row=11, column=0, sticky='W')
+    label_help_txt9.grid(row=12, column=0, sticky='W')
+    label_help_txt10.grid(row=13, column=0, sticky='W')
+    label_help_txt11.grid(row=14, column=0, sticky='W')
+    label_help_txt12.grid(row=15, column=0, sticky='W')
+    label_help_txt13.grid(row=16, column=0, sticky='W')
+    label_help_txt14.grid(row=17, column=0, sticky='W')
+    label_help_txt15.grid(row=18, column=0, sticky='W')
+    label_help_sub4.grid(row=19, column=0, sticky='W')
+    label_help_txt16.grid(row=20, column=0, sticky='W')
+
+    # scroll with mouse
+    def on_mouse_wheel(event):
+        canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+    
+    canvas.bind_all("<MouseWheel>", on_mouse_wheel)
+
+    # size of scrollbar window equal to size of the whole window
+    def update_canvas_size(event=None):
+        width = 800*root_help.winfo_width()
+        height = 400*root_help.winfo_height()
+        canvas.config(width=width, height=height)
+        canvas.config(scrollregion=canvas.bbox("all"))
+    
+    root_help.bind("<Configure>", update_canvas_size)
+
+    root_help.mainloop()
 
 # main window
 root_main=tk.Tk()
 root_main.title('Casino Roulette')
 root_main.geometry('1500x600')
+root_main.resizable(False, False)
 
 circle_path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\roulette.png'
 coin5path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin5.png'
