@@ -147,6 +147,12 @@ def coin_choose_100(event=None):
     global selected_coin
     selected_coin = 100
 
+# function operating on bets, balance and chances
+def bet(name:str):
+    bet_on_one=0
+    bet_on_one+=selected_coin
+    single_bet=ff.single_bet(name, selected_coin)
+
 
 # main window
 root_main=tk.Tk()

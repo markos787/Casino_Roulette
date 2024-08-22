@@ -28,8 +28,8 @@ def enter_prize(x:str)->int: # returns value of enter prize depending on chosen 
         enter=100
     return enter
 
-def single_bet(position:str, x:str, list:list)->dict: # returns dictionary with single bet
-    return {f'{position}':enter_prize(x)}
+def single_bet(position:str, x:int)->dict: # returns dictionary with single bet
+    return {f'{position}':x}
 
 def bet_position(list:list)->dict: # returns all bets divided between single positions
     dictionary={}
