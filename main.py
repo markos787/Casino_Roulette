@@ -1,6 +1,6 @@
 import functions as ff
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import IntVar, PhotoImage
 import time
 
 # help window
@@ -95,6 +95,59 @@ def help_window(event=None):
 
     root_help.mainloop()
 
+# definng the list of results
+results_list=[]
+
+# variable for coin
+selected_coin=0
+
+# functions of choosing coins for a bet
+def coin_choose_5(event=None):
+    check5.select()
+    check10.deselect()
+    check25.deselect()
+    check50.deselect()
+    check100.deselect()
+    global selected_coin
+    selected_coin = 5
+
+def coin_choose_10(event=None):
+    check5.deselect()
+    check10.select()
+    check25.deselect()
+    check50.deselect()
+    check100.deselect()
+    global selected_coin
+    selected_coin = 10
+
+def coin_choose_25(event=None):
+    check5.deselect()
+    check10.deselect()
+    check25.select()
+    check50.deselect()
+    check100.deselect()
+    global selected_coin
+    selected_coin = 25
+
+def coin_choose_50(event=None):
+    check5.deselect()
+    check10.deselect()
+    check25.deselect()
+    check50.select()
+    check100.deselect()
+    global selected_coin
+    selected_coin = 50
+
+def coin_choose_100(event=None):
+    check5.deselect()
+    check10.deselect()
+    check25.deselect()
+    check50.deselect()
+    check100.select()
+    global selected_coin
+    selected_coin = 100
+
+
 # main window
 root_main=tk.Tk()
 root_main.title('Casino Roulette')
@@ -146,6 +199,22 @@ frame_neighbours.grid(row=1, column=2)
 frame_money.grid(row=2, column=2)
 
 
+# circle of roulette and play button
+circle=tk.Label(frame_circle, image=circle_img)
+spin=tk.Button(frame_circle, width=4, text='Spin')
+help=tk.Button(frame_circle, width=4, text='Help', command=help_window)
+outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
+back=tk.Button(frame_circle, width=7, text='Back bet')
+reset=tk.Button(frame_circle, width=7, text='Reset bet')
+
+circle.grid(row=0, column=0, columnspan=2)
+spin.grid(row=1, column=0)
+help.grid(row=1, column=1)
+outcome.grid(row=2, column=0, columnspan=2)
+back.grid(row=3, column=0)
+reset.grid(row=3, column=1)
+
+
 # list of last numbers
 label1=tk.Label(frame_prev, text='--')
 label2=tk.Label(frame_prev, text='--')
@@ -168,22 +237,6 @@ label7.grid(row=6, column=0)
 label8.grid(row=7, column=0)
 label9.grid(row=8, column=0)
 label10.grid(row=9, column=0)
-
-
-# circle of roulette and play button
-circle=tk.Label(frame_circle, image=circle_img)
-spin=tk.Button(frame_circle, width=4, text='Spin')
-help=tk.Button(frame_circle, width=4, text='Help', command=help_window)
-outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
-back=tk.Button(frame_circle, width=7, text='Back bet')
-reset=tk.Button(frame_circle, width=7, text='Reset bet')
-
-circle.grid(row=0, column=0, columnspan=2)
-spin.grid(row=1, column=0)
-help.grid(row=1, column=1)
-outcome.grid(row=2, column=0, columnspan=2)
-back.grid(row=3, column=0)
-reset.grid(row=3, column=1)
 
 
 # numbers and bets
@@ -602,16 +655,17 @@ serie58.grid(row=1, column=14, columnspan=6, sticky='w')
 balance=tk.Label(frame_money, text='Your balance', background='white', borderwidth=2, relief='solid', width=12, height=2)
 cur_bet=tk.Label(frame_money, text='Bet', background='white', borderwidth=2, relief='solid', width=12, height=2)
 chances=tk.Label(frame_money, text='Chances', background='white', borderwidth=2, relief='solid', width=12, height=2)
-check5=tk.Radiobutton(frame_money)
-check10=tk.Radiobutton(frame_money)
-check25=tk.Radiobutton(frame_money)
-check50=tk.Radiobutton(frame_money)
-check100=tk.Radiobutton(frame_money)
-coin5=tk.Button(frame_money, image=coin5_img, width=60, height=60)
-coin10=tk.Button(frame_money, image=coin10_img, width=60, height=60)
-coin25=tk.Button(frame_money, image=coin25_img, width=60, height=60)
-coin50=tk.Button(frame_money, image=coin50_img, width=60, height=60)
-coin100=tk.Button(frame_money, image=coin100_img, width=60, height=60)
+var=IntVar()
+check5=tk.Radiobutton(frame_money, variable=var, value=1)
+check10=tk.Radiobutton(frame_money, variable=var, value=2)
+check25=tk.Radiobutton(frame_money, variable=var, value=3)
+check50=tk.Radiobutton(frame_money, variable=var, value=4)
+check100=tk.Radiobutton(frame_money, variable=var, value=5)
+coin5=tk.Button(frame_money, image=coin5_img, width=60, height=60, command=coin_choose_5)
+coin10=tk.Button(frame_money, image=coin10_img, width=60, height=60, command=coin_choose_10)
+coin25=tk.Button(frame_money, image=coin25_img, width=60, height=60, command=coin_choose_25)
+coin50=tk.Button(frame_money, image=coin50_img, width=60, height=60, command=coin_choose_50)
+coin100=tk.Button(frame_money, image=coin100_img, width=60, height=60, command=coin_choose_100)
 
 balance.grid(row=0, column=0, rowspan=2)
 cur_bet.grid(row=0, column=1, rowspan=2)
