@@ -366,18 +366,11 @@ def chances(dict:dict)->str: # returns percentage of chances to win anything fro
         else:
             single_numbers.append(item)
     
-    chance=f'{round(len(single_numbers)/36, 2)}%'
+    chance=f'{round(100*len(single_numbers)/37, 2)}%'
         
     return chance
-
-def back_bet(dict:dict)->dict: # returns dictionary of bets without the last one
-    dict.popitem()
-    return dict
-
-def reset_bet(dict:dict)->dict: # returns empty dictionary of bets
-    dict.clear()
-    return dict
 
 # lista=[{'d36':5}, {'n25':10}, {'t123':10}, {'d36':10}, {'d36':25}, {'t123': 25}]
 # diction={'d36': 40, 'n25': 10, 't123': 35}
 # print(chances(diction))
+# chances({'o0':20, 'd12':35, 'spiel':20})
