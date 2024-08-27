@@ -1,0 +1,26 @@
+Help
+
+
+1. What is roulette?
+French roulette is a game in which players place bets on the outcome of one of 37 numbers drawn from 0 to 36. The roulette wheel is turned by a dealer (throw), who also settles the winnings after the throw. Players can bet not only on individual numbers, but also on their combinations, which will be explained below. The outcome of the throw is completely random. In the computer version, the system plays the role of the dealer, but the outcome is also 100% random.
+
+2. What is the maximum bet?
+A player can place a maximum of 10,000 on the table at one time.
+
+3. What do the individual bets look like?
+Single - a bet on a single number. The chance of hitting is the smallest, but the winnings are the highest. The player receives 36 times their bet.
+Two - the player bets on two numbers that are adjacent to each other on the table (not on the wheel). The win is 18 times the bet.
+Three - a bet on three numbers that are adjacent to each other on the table. The win is 12 times the bet.
+Four - the player bets on a combination of the four numbers that are closest to each other on the table. The win is 9 times the bet.
+Six - a bet on the six numbers that are closest to each other on the table. The win is 6 times the bet.
+Dozen - twelve consecutive numbers according to the table. The win is 3 times the bet. The minimum bet is 25.
+Column - twelve numbers located in three columns of the table. The win is 3 times the bet. The minimum bet is 25.
+Color - black or red. The win is 2 times the bet. The minimum bet is 50.
+Neighbors - when betting on the neighbor of a given number, you bet on that number and two of its neighbors on each side according to the wheel. The win is 31 times the bet. The minimum bet includes 5 tokens.
+0 Spiel - in this bet, you bet on the neighbors of the number 0. The bet on the number 26 is a single, and on the numbers 0, 3, 12, 15, 32 and 35 - double. The minimum bet is 4 tokens, so the winnings are either 32 times or 14 times the bet.
+Series 0/2/3 - bet on the numbers 15, 32, 0, 26, 3, 35, 12, 28, 7, 29, 18, 22, 25, 2, 21, 4 and 19 (i.e. this is an extended 0 Spiel), with the numbers 25, 26, 28 and 29 being double fours, the numbers 0, 2 and 3 being double threes, and the remaining numbers being single twos. The minimum bet is 9 tokens, and the winnings are 9 times, 15 times or also 9 times if a four, three or two is rolled.
+Orphelins - consists of numbers that neither Series 0/2/3 nor Series 5/8 will cover, i.e. 9, 31, 14, 20, 1, 6, 34 and 17. This is a stake of 5 tokens, one of which is on 1 and then one token each on the twos 6/9, 14/17, 17/20 and 31/34.
+Series 5/8 - includes the remaining numbers not listed above, i.e. 33, 16, 24, 5, 10, 23, 8, 30, 11, 36, 13 and 27. All 6 of the minimum chips are placed on the pairs of these numbers, so the winnings are 12 times the bet.
+
+4. How to play?
+First, you must make a bet. To do this, click on the icon of the token in question, and then on the button with the number or another bet. This action must be repeated each time for a new bet. The total bet and the chances of hitting the number with the current total bet will be displayed to the left of the tokens. Even further to the left is the balance, which the player starts at 5,000. If the player wants to undo the previous bet, they should click "Back bet" under the roulette wheel, and if they want to bet again - the "Reset bet" button next to it. There is also a place for the last drawn number under the wheel, and a history of the last 10 draws on the left side of the wheel. To spin the wheel, click the "Spin" button.

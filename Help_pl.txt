@@ -1,0 +1,26 @@
+Pomoc
+
+
+1. Czym jest ruletka?
+Ruletka francuska jest grą, polegającą na wykonywaniu przez graczy zakładów na wynik losowania jednej z 37 liczb z zakresu od 0 do 36. Obrotu kołem ruletki (rzutu) dokonuje krupier, który również prowadzi rozliczenia wygranych po rzucie. Gracze mogą obstawiać nie tylko pojedyncze liczby, ale również ich kombinacje, które zostaną wyjaśnione poniżej. Wynik rzutu jest całkowicie losowy. W wersji na komputer rolę krupiera pełni system, jednak wynik również jest w 100 procentach losowy.
+
+2. Jaki jest maksymalny zakład?
+Jednorazowo na stół gracz może wyłożyć maksymalnie 10 000. 
+
+3. Jak wyglądają poszczególne zakłady?
+Pojedyncze - zakład na pojedynczą liczbę. Szansa trafienia jest najmniejsza, ale wygrana największa. Gracz otrzymuje 36-krotność swojego zakładu.
+Dwójka - gracz stawia na dwie sąsiadujące ze sobą na stole (a nie na kole) liczby. Wygrana to 18-krotność zakładu.
+Trójka - zakład na trójkę sąsiadujących ze sobą na stole liczb. Wygrana to 12-krotność zakładu.
+Czwórka - gracz stawia na kombinację czterech najbliższych sobie na stole liczb. Wygrana to 9-krotność zakładu.
+Szóstka - zakład na sześć najbliższych sobie na stole liczb. Wygrana to 6-krotność zakładu.
+Tuzin - dwanaście kolejnych liczb według stołu. Wygrana to 3-krotność zakładu. Minimalny zakład to 25.
+Kolumna - dwanaście liczb znajdujących się w trzech kolumnach stołu. Wygrana to 3-krotność zakładu. Minimalny zakład to 25.
+Kolor - czarny albo czerowny. Wygrana to 2-krotność zakładu. Minimalny zakład to 50.
+Sąsiedzi - stawiając na sąsiada danej liczby stawiasz na tę liczbę i po dwóch jej sąsiadów z każdej strony według koła. Wygrana to 31-krotność zakładu. Minimalny zakład obejmuje 5 żetonów.
+0 Spiel - w tym zakładzie obstawiani są sąsiedzi liczby 0. Zakład na liczbę 26 jest pojedynczy, a na liczby 0, 3, 12, 15, 32 i 35 - podwójny. Minimalny zakład obejmuje 4 żetony i z tego względu wygrana to albo 32-krotność albo 14-krotność zakładu
+Serie 0/2/3 - zakład na liczby 15, 32, 0, 26, 3, 35, 12, 28, 7, 29, 18, 22, 25, 2, 21, 4 oraz 19 (czyli jest to rozszerzony 0 Spiel), przy czym na liczby 25, 26, 28 i 29 - podwójną czwórką, na liczby 0, 2 i 3 - podwójną trójką, a na pozostałe - pojedynczą dwójką. Minimalny zakład obejmuje 9 żetonów, a wygrana to 9-krotność, 15-krotność lub również 9-krotność, jeżeli wypadnie odpowiednio - czwórka, trójka lub dwójka.
+Orphelins - składa się z numerów, których nie pokryje ani Serie 0/2/3, ani Serie 5/8, czyli z 9, 31, 14, 20, 1, 6, 34 oraz 17.  Jest to stawka 5 żetonów, z których jeden jest na 1 a następnie po jednym żetonie na dwójki 6/9, 14/17, 17/20 i 31/34.
+Serie 5/8 - obejmuje pozostałe liczby niewymienione wyżej, a więc 33, 16, 24, 5, 10, 23, 8, 30, 11, 36, 13 oraz 27. Wszystkie z 6 minimalnych żetonów kładzie się na dwójki tych liczb, więc wygrana to 12-krotność zakładu.
+
+4. Jak grać?
+W pierwszej kolejności należy dokonać zakładu. Aby tego dokonać, należy kliknąć w ikonę danego żetonu, a następnie w przycisk z liczbą lub innym zakładem. Czynność tę należy powtarzać każdorazowo dla nowego zakładu. Całkowity zakład oraz szanse na trafienie liczby przy aktualnym zakładzie całkowitym wyświetlone zostaną na lewo od żetonów. Jeszcze dalej na lewo znajduje się balans, który gracz rozpoczyna na poziomie 5 000. Jeżeli gracz chce cofnąć poprzedni zakład, należy kliknąć "Back bet" pod kołem ruletki, a jeżeli chce postawić od nowa - przycisk "Reset bet" obok. Pod kołem znajduje się również miejsce na ostatnio wylosowaną liczbę, a po lewej stronie koła - historia ostatnich 10 losowań. Aby zakręcić kołem, należy kliknąć przycisk "Spin".
