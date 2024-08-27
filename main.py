@@ -176,7 +176,17 @@ def bet(name):
     selected_rb=var.get()
     if selected_rb:
         name_str=bets[name]
+        # if name_str.startswith('n') or name_str=='orphelins':
+        #     single_bet=ff.single_bet(name_str, 5*selected_coin)
+        # elif name_str=='spiel':
+        #     single_bet=ff.single_bet(name_str, 4*selected_coin)
+        # elif name_str=='serie023':
+        #     single_bet=ff.single_bet(name_str, 9*selected_coin)
+        # elif name_str=='serie58':
+        #     single_bet=ff.single_bet(name_str, 6*selected_coin)
+        # else:
         single_bet=ff.single_bet(name_str, selected_coin)
+        
         bets_list.append(single_bet)
         bet_position=ff.bet_position(bets_list)
         bet_on_number=bet_position[name_str]
@@ -291,10 +301,106 @@ def bet_reset(event=None):
             name.config(text=str_number[1:], fg='white', font=('TkDefaultFont', 9))
         else:
             name.config(text='')
+
     balance.config(text=f'{balance_history[-1]}')
     cur_bet.config(text='0')
     chances.config(text='0.00%')
+    bets_list.clear()
+
+def spin_check(event=None):
+    bet_position=ff.bet_position(bets_list)
+    overall_bet=int(ff.overall_bet(bet_position))
+
+    if ('red' in bet_position and bet_position['red']<50) or ('black' in bet_position and bet_position['black']<50) or ('doz112' in bet_position and bet_position['doz112']<25) or ('doz1324' in bet_position and bet_position['doz1324']<25) or ('doz2536' in bet_position and bet_position['doz2536']<25) or ('col134' in bet_position and bet_position['col134']<25) or ('col235' in bet_position and bet_position['col235']<25) or ('col336' in bet_position and bet_position['col336']<25):
+        root_er3=tk.Toplevel()
+        root_er3.title('Info')
+        root_er3.geometry('200x100')
+        root_er3.resizable(False, False)
+
+        info_er1=tk.Label(root_er3, text="You have to make bigger bet on dozens, columns or colours!", anchor='center', font=('Times New Roman', 12), wraplength=180)
+        ok_but_er1=tk.Button(root_er3, text='OK', command=root_er3.destroy, width=10)
+
+        info_er1.grid(row=0, column=0, padx=10)
+        ok_but_er1.grid(row=1, column=0, padx=30, pady=3)
+
+        root_er3.mainloop()
+    else:
+        pass
+
+    # for _ in range(3):
+    #     time.sleep(1)
+    #     outcome.config(text="Spinning.", font=('TkDefaultFont', 9))
+    #     outcome.update_idletasks()
+    #     time.sleep(1)
+    #     outcome.config(text="Spinning..", font=('TkDefaultFont', 9))
+    #     outcome.update_idletasks()
+    #     time.sleep(1)
+    #     outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
+    #     outcome.update_idletasks()
+
+    result=ff.draw(results_list)
+    result_positions=ff.draw_result(result)
+    result_of_bet=ff.bet_result(result, result_positions, bet_position)
+    balance_after=ff.balance(balance_history, overall_bet, result_of_bet)
+    bet_balance=balance_after[-1]-balance_after[-2]
+    plus_minus='+' if bet_balance>=0 else ''
+    bets_list.clear()
+
+    outcome.config(text=result, font=('TkDefaultFont', 9, 'bold'))
+
+    label1.config(text=ff.prev_numbers(results_list, len(results_list)))
+    label2.config(text=ff.prev_numbers(results_list, len(results_list)-1))
+    label3.config(text=ff.prev_numbers(results_list, len(results_list)-2))
+    label4.config(text=ff.prev_numbers(results_list, len(results_list)-3))
+    label5.config(text=ff.prev_numbers(results_list, len(results_list)-4))
+    label6.config(text=ff.prev_numbers(results_list, len(results_list)-5))
+    label7.config(text=ff.prev_numbers(results_list, len(results_list)-6))
+    label8.config(text=ff.prev_numbers(results_list, len(results_list)-7))
+    label9.config(text=ff.prev_numbers(results_list, len(results_list)-8))
+    label10.config(text=ff.prev_numbers(results_list, len(results_list)-9))
+    balance.config(text=f'{balance_after[-1]}')
+    cur_bet.config(text='0')
+    chances.config(text='0.00%')
+    for key, value in bets.items():
+        str_number=str(value)
+        name=key
+        if str_number.startswith('doz112'):
+            name.config(text='1 to 12', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('doz1324'):
+            name.config(text='13 to 24', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('doz2536'):
+            name.config(text='25 to 36', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('col134'):
+            name.config(text='1st 12', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('col235'):
+            name.config(text='2nd 12', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('col336'):
+            name.config(text='3rd 12', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('spiel'):
+            name.config(text='0 SPIEL', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('serie023'):
+            name.config(text='SERIE 0/2/3', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('orphelins'):
+            name.config(text='ORPHELINS', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('serie58'):
+            name.config(text='SERIE 5/8', fg='white', font=('TkDefaultFont', 9))
+        elif str_number.startswith('o') or str_number.startswith('n'):
+            name.config(text=str_number[1:], fg='white', font=('TkDefaultFont', 9))
+        else:
+            name.config(text='')
     
+    # root info about the result of a draw
+    root_bet_res=tk.Toplevel()
+    root_bet_res.title('Info')
+    root_bet_res.geometry('200x110')
+    root_bet_res.resizable(False, False)
+    info_er1=tk.Label(root_bet_res, text=f'Your bet result is:', anchor='center', font=('Times New Roman', 14), wraplength=180)
+    info2_er1=tk.Label(root_bet_res, text=f'{plus_minus}{bet_balance}', anchor='center', font=('Times New Roman', 14, 'bold'), wraplength=180)
+    ok_but_er1=tk.Button(root_bet_res, text='OK', command=root_bet_res.destroy, width=10)
+    info_er1.grid(row=0, column=0, padx=30, pady=(5,0))
+    info2_er1.grid(row=1, column=0, padx=40)
+    ok_but_er1.grid(row=2, column=0, padx=40, pady=5)
+    root_bet_res.mainloop()
 
 # the rest of main window
 circle_path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\roulette.png'
@@ -315,18 +421,6 @@ coin100_img=PhotoImage(file=coin100path)
 frame_main=tk.Frame(root_main, width=(root_main.winfo_width())/2, height=(root_main.winfo_height())/2, bg='green')
 frame_main.grid(row=0, column=0)
 
-# scrollbar_y = ttk.Scrollbar(root_main, orient=tk.VERTICAL)
-# canvas = tk.Canvas(root_main, yscrollcommand=scrollbar_y.set)
-# canvas.create_window((0, 0), window=frame_main, anchor='nw')
-# scrollbar_y.config(command=canvas.yview)
-
-# def on_configure(event):
-#     canvas.configure(scrollregion=canvas.bbox('all'))
-
-# canvas.bind('<Configure>', on_configure)
-# canvas.grid(row=0, column=0, sticky='e')
-# scrollbar_y.grid(row=0, column=1, sticky='ns')
-
 
 # sub frames
 frame_prev=tk.Frame(frame_main, width=50, bg='green')
@@ -344,15 +438,17 @@ frame_money.grid(row=2, column=2)
 
 # circle of roulette and play button
 circle=tk.Label(frame_circle, image=circle_img, bg='green')
-spin=tk.Button(frame_circle, width=4, text='Spin', bg='grey25', fg='white')
+spin=tk.Button(frame_circle, width=4, text='Spin',command=spin_check, bg='grey25', fg='white')
 help=tk.Button(frame_circle, width=4, text='Help', command=help_window, bg='grey25', fg='white')
 outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
+outcome_label=tk.Label(frame_circle, text='Outcome', bg='green', fg='white', font=('TkDefaultFont', 10, 'bold'))
 back=tk.Button(frame_circle, width=7, text='Back bet', command=bet_back, bg='grey25', fg='white')
 reset=tk.Button(frame_circle, width=7, text='Reset bet', command=bet_reset, bg='grey25', fg='white')
 
 circle.grid(row=0, column=0, columnspan=2)
 spin.grid(row=1, column=0)
 help.grid(row=1, column=1)
+outcome_label.grid(row=1, column=0, columnspan=2, pady=(0,2))
 outcome.grid(row=2, column=0, columnspan=2)
 back.grid(row=3, column=0)
 reset.grid(row=3, column=1)
@@ -796,8 +892,11 @@ serie58.grid(row=1, column=14, columnspan=6, sticky='w')
 
 # money
 balance=tk.Label(frame_money, text='Your balance', background='white', borderwidth=2, relief='solid', width=12, height=2)
+balance_label=tk.Label(frame_money, text='Balance', bg='green', fg='white', font=('TkDefaultFont', 10, 'bold'))
 cur_bet=tk.Label(frame_money, text='Bet', background='white', borderwidth=2, relief='solid', width=12, height=2)
+cur_bet_label=tk.Label(frame_money, text='Bet', bg='green', fg='white', font=('TkDefaultFont', 10, 'bold'))
 chances=tk.Label(frame_money, text='Chances', background='white', borderwidth=2, relief='solid', width=12, height=2)
+chances_label=tk.Label(frame_money, text='Chances', bg='green', fg='white', font=('TkDefaultFont', 10, 'bold'))
 check5=tk.Radiobutton(frame_money, variable=var, value=1, bg='green')
 check10=tk.Radiobutton(frame_money, variable=var, value=2, bg='green')
 check25=tk.Radiobutton(frame_money, variable=var, value=3, bg='green')
@@ -809,9 +908,12 @@ coin25=tk.Button(frame_money, image=coin25_img, width=60, height=60, command=coi
 coin50=tk.Button(frame_money, image=coin50_img, width=60, height=60, command=coin_choose_50, bg='green')
 coin100=tk.Button(frame_money, image=coin100_img, width=60, height=60, command=coin_choose_100, bg='green')
 
-balance.grid(row=0, column=0, rowspan=2)
-cur_bet.grid(row=0, column=1, rowspan=2)
-chances.grid(row=0, column=2, rowspan=2)
+balance_label.grid(row=0, column=0, pady=(10,0))
+cur_bet_label.grid(row=0, column=1, pady=(10,0))
+chances_label.grid(row=0, column=2, pady=(10,0))
+balance.grid(row=1, column=0)
+cur_bet.grid(row=1, column=1)
+chances.grid(row=1, column=2)
 check5.grid(row=0, column=3)
 check10.grid(row=0, column=4)
 check25.grid(row=0, column=5)
