@@ -1,3 +1,4 @@
+from email.mime import image
 import functions as ff
 import tkinter as tk
 from tkinter import IntVar, PhotoImage
@@ -176,16 +177,16 @@ def bet(name):
     selected_rb=var.get()
     if selected_rb:
         name_str=bets[name]
-        # if name_str.startswith('n') or name_str=='orphelins':
-        #     single_bet=ff.single_bet(name_str, 5*selected_coin)
-        # elif name_str=='spiel':
-        #     single_bet=ff.single_bet(name_str, 4*selected_coin)
-        # elif name_str=='serie023':
-        #     single_bet=ff.single_bet(name_str, 9*selected_coin)
-        # elif name_str=='serie58':
-        #     single_bet=ff.single_bet(name_str, 6*selected_coin)
-        # else:
-        single_bet=ff.single_bet(name_str, selected_coin)
+        if name_str.startswith('n') or name_str=='orphelins':
+            single_bet=ff.single_bet(name_str, 5*selected_coin)
+        elif name_str=='spiel':
+            single_bet=ff.single_bet(name_str, 4*selected_coin)
+        elif name_str=='serie023':
+            single_bet=ff.single_bet(name_str, 9*selected_coin)
+        elif name_str=='serie58':
+            single_bet=ff.single_bet(name_str, 6*selected_coin)
+        else:
+            single_bet=ff.single_bet(name_str, selected_coin)
         
         bets_list.append(single_bet)
         bet_position=ff.bet_position(bets_list)
@@ -193,12 +194,7 @@ def bet(name):
         overall_bet=ff.overall_bet(bet_position)
         chance=ff.chances(bet_position)
 
-        if int(overall_bet)<=balance_history[-1]:
-            name.config(text=bet_on_number, fg='cyan', font=('Calibri', 10, 'bold'))
-            balance.config(text=f'{balance_history[-1]-int(overall_bet)}')
-            cur_bet.config(text=overall_bet)
-            chances.config(text=chance)
-        else:
+        if int(overall_bet)>=balance_history[-1]:
             root_er1=tk.Toplevel()
             root_er1.title('Info')
             root_er1.geometry('200x100')
@@ -211,6 +207,26 @@ def bet(name):
             ok_but_er1.grid(row=1, column=0, padx=30, pady=3)
 
             root_er1.mainloop()
+
+        elif int(overall_bet)>10000:
+            root_er4=tk.Toplevel()
+            root_er4.title('Info')
+            root_er4.geometry('200x100')
+            root_er4.resizable(False, False)
+
+            info_er1=tk.Label(root_er4, text="Maximum bet is 10 000!", anchor='center', font=('Times New Roman', 12), wraplength=180)
+            ok_but_er1=tk.Button(root_er4, text='OK', command=root_er4.destroy, width=10)
+
+            info_er1.grid(row=0, column=0, padx=25, pady=10)
+            ok_but_er1.grid(row=1, column=0, padx=35, pady=3)
+
+            root_er4.mainloop()
+
+        else:
+            name.config(text=bet_on_number, fg='cyan', font=('Calibri', 10, 'bold'))
+            balance.config(text=f'{balance_history[-1]-int(overall_bet)}')
+            cur_bet.config(text=overall_bet)
+            chances.config(text=chance)
 
     else:
         root_er2=tk.Toplevel()
@@ -243,6 +259,7 @@ def bet_back(event=None):
     try:
         bet_on_number=bet_position[number]
         name.config(text=bet_on_number, fg='white', font=('Calibri', 10, 'bold'))
+
     except:
         if str_number.startswith('doz112'):
             name.config(text='1 to 12', fg='white', font=('TkDefaultFont', 9))
@@ -327,16 +344,16 @@ def spin_check(event=None):
     else:
         pass
 
-    # for _ in range(3):
-    #     time.sleep(1)
-    #     outcome.config(text="Spinning.", font=('TkDefaultFont', 9))
-    #     outcome.update_idletasks()
-    #     time.sleep(1)
-    #     outcome.config(text="Spinning..", font=('TkDefaultFont', 9))
-    #     outcome.update_idletasks()
-    #     time.sleep(1)
-    #     outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
-    #     outcome.update_idletasks()
+    for _ in range(3):
+        time.sleep(1)
+        outcome.config(text="Spinning.", font=('TkDefaultFont', 9))
+        outcome.update_idletasks()
+        time.sleep(1)
+        outcome.config(text="Spinning..", font=('TkDefaultFont', 9))
+        outcome.update_idletasks()
+        time.sleep(1)
+        outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
+        outcome.update_idletasks()
 
     result=ff.draw(results_list)
     result_positions=ff.draw_result(result)
@@ -388,6 +405,14 @@ def spin_check(event=None):
             name.config(text=str_number[1:], fg='white', font=('TkDefaultFont', 9))
         else:
             name.config(text='')
+
+    result_name=f'o{result}'
+    for key, value in bets.items():
+        str_number=str(value)
+        name=key
+        if str_number==result_name:
+            name.config(text='●', font=('Times New Roman', 9, 'bold'), fg='cyan')
+            name.update_idletasks()
     
     # root info about the result of a draw
     root_bet_res=tk.Toplevel()
@@ -401,6 +426,7 @@ def spin_check(event=None):
     info2_er1.grid(row=1, column=0, padx=40)
     ok_but_er1.grid(row=2, column=0, padx=40, pady=5)
     root_bet_res.mainloop()
+
 
 # the rest of main window
 circle_path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\roulette.png'

@@ -114,26 +114,26 @@ def bet_result(x:int, list:list, dict:dict)->int: # returns money won (if any) i
         elif str(key2).startswith('red') or str(key2).startswith('black'):
             result2[key2]=value2*2
         elif str(key2).startswith('n'):
-            result2[key2]=value2*36
+            result2[key2]=value2*36/5
         elif str(key2).startswith('sp'):
             if x==26:
-                result2[key2]=value2*36
+                result2[key2]=value2*36/4
             else:
-                result2[key2]=value2*18
+                result2[key2]=value2*18/4
         elif str(key2).startswith('orp'):
             if x==1 or x==17:
-                result2[key2]=value2*36
+                result2[key2]=value2*36/5
             else:
-                result2[key2]=value2*18
+                result2[key2]=value2*18/5
         elif str(key2).startswith('serie023'):
             if x==25 or x==26 or x==28 or x==29:
-                result2[key2]=value2*9
+                result2[key2]=value2*9/9
             elif x==0 or x==2 or x==3:
-                result2[key2]=value2*12
+                result2[key2]=value2*12/9
             else:
-                result2[key2]=value2*18
+                result2[key2]=value2*18/9
         elif str(key2).startswith('serie58'):
-            result2[key2]=value2*18
+            result2[key2]=value2*18/6
         
     sum_values=int(sum(result2.values()))
 
