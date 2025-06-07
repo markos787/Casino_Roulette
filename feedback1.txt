@@ -1,0 +1,4 @@
+1. Pulsujący kwadrat na kole w trakcie kręcenia albo obrót koła o jakiś kąt w czasie
+2. Komunikaty w innym kolorze i albo na środku albo nad miejscem kliknięcia
+3. Większa historia losowań, balans, zakład i szanse
+4. Ewentualnie zrobić polską wersję językową
