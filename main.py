@@ -3,11 +3,12 @@ import functions as ff
 import tkinter as tk
 from tkinter import IntVar, PhotoImage
 import time
+from PIL import Image, ImageTk
 
 # main window
 root_main=tk.Tk()
 root_main.title('Casino Roulette')
-root_main.geometry('1500x600')
+root_main.geometry('1530x600')
 root_main.resizable(False, False)
 root_main.config(bg='green')
 
@@ -354,6 +355,40 @@ def spin_check(event=None):
         time.sleep(1)
         outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
         outcome.update_idletasks()
+    
+    ### --- PRZYSTOSOWAĆ --- ###
+    # def rotate_image(image_path, image_container, label, angle_step=5, interval_ms=50):
+    #     angle = 0
+    #     original_image = Image.open(image_path)
+
+    #     def update():
+    #         nonlocal angle
+    #         # Obróć i zaktualizuj PhotoImage
+    #         rotated = original_image.rotate(angle, resample=Image.BICUBIC, expand=True)
+    #         image_container[0] = ImageTk.PhotoImage(rotated)
+    #         label.config(image=image_container[0])
+
+    #         angle = (angle + angle_step) % 360
+    #         label.after(interval_ms, update)
+
+    #     update()  # Start animacji
+
+    # # Przygotowanie GUI
+    # root = tk.Tk()
+    # image_path = "sciezka/do/obrazu.png"  # <- Podaj poprawną ścieżkę
+
+    # # Kontener na PhotoImage (lista 1-elementowa, bo przekazuje referencję)
+    # image_var = [None]
+    # dummy_image = ImageTk.PhotoImage(Image.new("RGBA", (1, 1)))  # placeholder
+
+    # # Etykieta z obrazem
+    # label = tk.Label(root, image=dummy_image)
+    # label.pack()
+
+    # # Uruchom obrót
+    # rotate_image(image_path, image_var, label)
+
+    # root.mainloop()
 
     result=ff.draw(results_list)
     result_positions=ff.draw_result(result)
@@ -435,12 +470,15 @@ coin10path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\c
 coin25path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin25.png'
 coin50path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin50.png'
 coin100path='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\coin100.png'
+arrowpath='C:\\Users\\Lenovo\\Pictures\\Nauka\\Programowanie\\ruletka_kasyno\\arrow.png'
 circle_img=PhotoImage(file=circle_path)
 coin5_img=PhotoImage(file=coin5path)
 coin10_img=PhotoImage(file=coin10path)
 coin25_img=PhotoImage(file=coin25path)
 coin50_img=PhotoImage(file=coin50path)
 coin100_img=PhotoImage(file=coin100path)
+arrow_img=PhotoImage(file=arrowpath)
+arrow_img=arrow_img.subsample(5, 7)
 
 
 # main frame
@@ -457,13 +495,14 @@ frame_money=tk.Frame(frame_main, bg='green')
 
 frame_prev.grid(row=0, column=0, rowspan=3, padx=10)
 frame_circle.grid(row=0, column=1, rowspan=3, padx=20)
-frame_bets.grid(row=0, column=2, padx=100)
+frame_bets.grid(row=0, column=2, padx=80)
 frame_neighbours.grid(row=1, column=2)
 frame_money.grid(row=2, column=2)
 
 
 # circle of roulette and play button
 circle=tk.Label(frame_circle, image=circle_img, bg='green')
+arrow=tk.Label(frame_circle, image=arrow_img, bg='green')
 spin=tk.Button(frame_circle, width=4, text='Spin',command=spin_check, bg='grey25', fg='white')
 help=tk.Button(frame_circle, width=4, text='Help', command=help_window, bg='grey25', fg='white')
 outcome=tk.Label(frame_circle, text='Outcome', background='white', borderwidth=2, relief='solid', width=12, height=2)
@@ -472,6 +511,7 @@ back=tk.Button(frame_circle, width=7, text='Back bet', command=bet_back, bg='gre
 reset=tk.Button(frame_circle, width=7, text='Reset bet', command=bet_reset, bg='grey25', fg='white')
 
 circle.grid(row=0, column=0, columnspan=2)
+arrow.grid(row=0, column=2, sticky='W')
 spin.grid(row=1, column=0)
 help.grid(row=1, column=1)
 outcome_label.grid(row=1, column=0, columnspan=2, pady=(0,2))
