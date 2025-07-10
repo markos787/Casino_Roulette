@@ -368,14 +368,10 @@ def spin_check(event=None):
     #         image_container[0] = ImageTk.PhotoImage(rotated)
     #         label.config(image=image_container[0])
 
-    #         angle = (angle + angle_step) % 360
+    #         angle = (angle - angle_step) % 360 # obrót w prawo, wykorzystać ff.rotation_angle
     #         label.after(interval_ms, update)
 
     #     update()  # Start animacji
-
-    # # Przygotowanie GUI
-    # root = tk.Tk()
-    # image_path = "sciezka/do/obrazu.png"  # <- Podaj poprawną ścieżkę
 
     # # Kontener na PhotoImage (lista 1-elementowa, bo przekazuje referencję)
     # image_var = [None]
@@ -386,9 +382,7 @@ def spin_check(event=None):
     # label.pack()
 
     # # Uruchom obrót
-    # rotate_image(image_path, image_var, label)
-
-    # root.mainloop()
+    # rotate_image(image_path, image_var, circle)
 
     result=ff.draw(results_list)
     result_positions=ff.draw_result(result)
