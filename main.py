@@ -358,7 +358,6 @@ def spin_check(event=None):
             label.after(100, on_complete)
         def update():
             nonlocal angle
-            print(angle)
             if angle <= end_angle:
                 on_finish()
                 return
