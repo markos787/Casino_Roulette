@@ -1,4 +1,5 @@
 from email.mime import image
+import re
 import functions as ff
 import tkinter as tk
 from tkinter import IntVar, PhotoImage
@@ -345,116 +346,106 @@ def spin_check(event=None):
     else:
         pass
 
-    for _ in range(3):
-        time.sleep(1)
-        outcome.config(text="Spinning.", font=('TkDefaultFont', 9))
-        outcome.update_idletasks()
-        time.sleep(1)
-        outcome.config(text="Spinning..", font=('TkDefaultFont', 9))
-        outcome.update_idletasks()
-        time.sleep(1)
-        outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
-        outcome.update_idletasks()
+    outcome.config(text="Spinning...", font=('TkDefaultFont', 9))
+    outcome.update_idletasks()
     
-    ### --- PRZYSTOSOWAĆ --- ###
-    # def rotate_image(image_path, image_container, label, angle_step=5, interval_ms=50):
-    #     angle = 0
-    #     original_image = Image.open(image_path)
+    # rotating image of a roulette circle
+    def rotate_image(image_path, image_container, label, result, on_complete, angle_step=5, interval_ms=int(1000/360)):
+        angle = 0
+        original_image = Image.open(image_path)
+        end_angle = -2 * 360 - ff.rotation_angle(result=result)
+        def on_finish():
+            label.after(100, on_complete)
+        def update():
+            nonlocal angle
+            print(angle)
+            if angle <= end_angle:
+                on_finish()
+                return
+            rotated = original_image.rotate(angle, resample=Image.BICUBIC, expand=False)
+            image_container[0] = ImageTk.PhotoImage(rotated)
+            label.config(image=image_container[0])
+            angle -= angle_step
+            label.after(interval_ms, update)
+        update()
 
-    #     def update():
-    #         nonlocal angle
-    #         # Obróć i zaktualizuj PhotoImage
-    #         rotated = original_image.rotate(angle, resample=Image.BICUBIC, expand=True)
-    #         image_container[0] = ImageTk.PhotoImage(rotated)
-    #         label.config(image=image_container[0])
+    # do it after the circle stops to rotate
+    def on_complete():
+        result_positions = ff.draw_result(result)
+        result_of_bet = ff.bet_result(result, result_positions, bet_position)
+        balance_after = ff.balance(balance_history, overall_bet, result_of_bet)
+        bet_balance = balance_after[-1] - balance_after[-2]
+        plus_minus = '+' if bet_balance >= 0 else ''
+        bets_list.clear()
 
-    #         angle = (angle - angle_step) % 360 # obrót w prawo, wykorzystać ff.rotation_angle
-    #         label.after(interval_ms, update)
+        outcome.config(text=result, font=('TkDefaultFont', 9, 'bold'))
 
-    #     update()  # Start animacji
+        label1.config(text=ff.prev_numbers(results_list, len(results_list)))
+        label2.config(text=ff.prev_numbers(results_list, len(results_list)-1))
+        label3.config(text=ff.prev_numbers(results_list, len(results_list)-2))
+        label4.config(text=ff.prev_numbers(results_list, len(results_list)-3))
+        label5.config(text=ff.prev_numbers(results_list, len(results_list)-4))
+        label6.config(text=ff.prev_numbers(results_list, len(results_list)-5))
+        label7.config(text=ff.prev_numbers(results_list, len(results_list)-6))
+        label8.config(text=ff.prev_numbers(results_list, len(results_list)-7))
+        label9.config(text=ff.prev_numbers(results_list, len(results_list)-8))
+        label10.config(text=ff.prev_numbers(results_list, len(results_list)-9))
+        balance.config(text=f'{balance_after[-1]}')
+        cur_bet.config(text='0')
+        chances.config(text='0.00%')
+        for key, value in bets.items():
+            str_number=str(value)
+            name=key
+            if str_number.startswith('doz112'):
+                name.config(text='1 to 12', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('doz1324'):
+                name.config(text='13 to 24', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('doz2536'):
+                name.config(text='25 to 36', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('col134'):
+                name.config(text='1st 12', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('col235'):
+                name.config(text='2nd 12', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('col336'):
+                name.config(text='3rd 12', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('spiel'):
+                name.config(text='0 SPIEL', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('serie023'):
+                name.config(text='SERIE 0/2/3', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('orphelins'):
+                name.config(text='ORPHELINS', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('serie58'):
+                name.config(text='SERIE 5/8', fg='white', font=('TkDefaultFont', 9))
+            elif str_number.startswith('o') or str_number.startswith('n'):
+                name.config(text=str_number[1:], fg='white', font=('TkDefaultFont', 9))
+            else:
+                name.config(text='')
 
-    # # Kontener na PhotoImage (lista 1-elementowa, bo przekazuje referencję)
-    # image_var = [None]
-    # dummy_image = ImageTk.PhotoImage(Image.new("RGBA", (1, 1)))  # placeholder
+        result_name=f'o{result}'
+        for key, value in bets.items():
+            str_number=str(value)
+            name=key
+            if str_number==result_name:
+                name.config(text='●', font=('Times New Roman', 9, 'bold'), fg='cyan')
+                name.update_idletasks()
+        
+        # root info about the result of a draw
+        root_bet_res=tk.Toplevel()
+        root_bet_res.title('Info')
+        root_bet_res.geometry('200x110')
+        root_bet_res.resizable(False, False)
+        info_er1=tk.Label(root_bet_res, text=f'Your bet result is:', anchor='center', font=('Times New Roman', 14), wraplength=180)
+        info2_er1=tk.Label(root_bet_res, text=f'{plus_minus}{bet_balance}', anchor='center', font=('Times New Roman', 14, 'bold'), wraplength=180)
+        ok_but_er1=tk.Button(root_bet_res, text='OK', command=root_bet_res.destroy, width=10)
+        info_er1.grid(row=0, column=0, padx=30, pady=(5,0))
+        info2_er1.grid(row=1, column=0, padx=40)
+        ok_but_er1.grid(row=2, column=0, padx=40, pady=5)
+        root_bet_res.mainloop()
 
-    # # Etykieta z obrazem
-    # label = tk.Label(root, image=dummy_image)
-    # label.pack()
-
-    # # Uruchom obrót
-    # rotate_image(image_path, image_var, circle)
-
+    image_var = [None]
     result=ff.draw(results_list)
-    result_positions=ff.draw_result(result)
-    result_of_bet=ff.bet_result(result, result_positions, bet_position)
-    balance_after=ff.balance(balance_history, overall_bet, result_of_bet)
-    bet_balance=balance_after[-1]-balance_after[-2]
-    plus_minus='+' if bet_balance>=0 else ''
-    bets_list.clear()
 
-    outcome.config(text=result, font=('TkDefaultFont', 9, 'bold'))
-
-    label1.config(text=ff.prev_numbers(results_list, len(results_list)))
-    label2.config(text=ff.prev_numbers(results_list, len(results_list)-1))
-    label3.config(text=ff.prev_numbers(results_list, len(results_list)-2))
-    label4.config(text=ff.prev_numbers(results_list, len(results_list)-3))
-    label5.config(text=ff.prev_numbers(results_list, len(results_list)-4))
-    label6.config(text=ff.prev_numbers(results_list, len(results_list)-5))
-    label7.config(text=ff.prev_numbers(results_list, len(results_list)-6))
-    label8.config(text=ff.prev_numbers(results_list, len(results_list)-7))
-    label9.config(text=ff.prev_numbers(results_list, len(results_list)-8))
-    label10.config(text=ff.prev_numbers(results_list, len(results_list)-9))
-    balance.config(text=f'{balance_after[-1]}')
-    cur_bet.config(text='0')
-    chances.config(text='0.00%')
-    for key, value in bets.items():
-        str_number=str(value)
-        name=key
-        if str_number.startswith('doz112'):
-            name.config(text='1 to 12', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('doz1324'):
-            name.config(text='13 to 24', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('doz2536'):
-            name.config(text='25 to 36', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('col134'):
-            name.config(text='1st 12', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('col235'):
-            name.config(text='2nd 12', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('col336'):
-            name.config(text='3rd 12', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('spiel'):
-            name.config(text='0 SPIEL', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('serie023'):
-            name.config(text='SERIE 0/2/3', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('orphelins'):
-            name.config(text='ORPHELINS', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('serie58'):
-            name.config(text='SERIE 5/8', fg='white', font=('TkDefaultFont', 9))
-        elif str_number.startswith('o') or str_number.startswith('n'):
-            name.config(text=str_number[1:], fg='white', font=('TkDefaultFont', 9))
-        else:
-            name.config(text='')
-
-    result_name=f'o{result}'
-    for key, value in bets.items():
-        str_number=str(value)
-        name=key
-        if str_number==result_name:
-            name.config(text='●', font=('Times New Roman', 9, 'bold'), fg='cyan')
-            name.update_idletasks()
-    
-    # root info about the result of a draw
-    root_bet_res=tk.Toplevel()
-    root_bet_res.title('Info')
-    root_bet_res.geometry('200x110')
-    root_bet_res.resizable(False, False)
-    info_er1=tk.Label(root_bet_res, text=f'Your bet result is:', anchor='center', font=('Times New Roman', 14), wraplength=180)
-    info2_er1=tk.Label(root_bet_res, text=f'{plus_minus}{bet_balance}', anchor='center', font=('Times New Roman', 14, 'bold'), wraplength=180)
-    ok_but_er1=tk.Button(root_bet_res, text='OK', command=root_bet_res.destroy, width=10)
-    info_er1.grid(row=0, column=0, padx=30, pady=(5,0))
-    info2_er1.grid(row=1, column=0, padx=40)
-    ok_but_er1.grid(row=2, column=0, padx=40, pady=5)
-    root_bet_res.mainloop()
+    rotate_image(circle_path, image_var, circle, result, on_complete)
 
 
 # the rest of main window
